@@ -7,7 +7,7 @@ module Pipedrive
     end
 
     def deals
-      Deal.all(get "#{resource_path}/#{id}/deals", :everyone => 1)
+      Deal.all(request_path: "#{resource_path}/#{id}/deals")
     end
 
     def merge(opts = {})

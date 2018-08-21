@@ -3,7 +3,6 @@ require 'ostruct'
 require 'forwardable'
 
 module Pipedrive
-
   # Globally set request headers
   HEADERS = {
     "User-Agent"    => "Ruby.Pipedrive.Api",
@@ -13,7 +12,6 @@ module Pipedrive
 
   # Base class for setting HTTParty configurations globally
   class Base < OpenStruct
-
     include HTTParty
 
     base_uri 'https://api.pipedrive.com/v1'
@@ -54,7 +52,7 @@ module Pipedrive
     #
     # @param [Hash] related_object_hash
     # @return [Hash]
-    def initialize_related_objects related_object_hash
+    def initialize_related_objects(related_object_hash)
       related_objects = Hash.new
       # Create related objects if given
       related_object_hash.each do |key, value|
@@ -108,21 +106,31 @@ module Pipedrive
         if response.class == HTTParty::Response
           raise HTTParty::ResponseError, response
         end
+
         raise StandardError, 'Unknown error'
       end
 
-      def new_list( attrs )
-        attrs['data'].is_a?(Array) ? attrs['data'].map {|data| self.new( 'data' => data ) } : []
+      def new_list(attrs)
+        attrs['data'].is_a?(Array) ? attrs['data'].map { |data| self.new( 'data' => data ) } : []
       end
 
-      def all(response = nil, options = {}, get_absolutely_all = false)
-        res = response || get(resource_path, options)
+      def all(options = {})
+        request_path = options[:request_path] || resource_path
+        paging = options.delete(:paging)
+        paging = true if paging.nil?
+
+        res = get(request_path, options)
+
         if res.ok?
-          data = res['data'].nil? ? [] : res['data'].map{|obj| new(obj)}
-          if get_absolutely_all && res['additional_data'] && res['additional_data']['pagination'] && res['additional_data']['pagination']['more_items_in_collection']
-            options[:query] = options[:query].merge({:start => res['additional_data']['pagination']['next_start']})
-            data += self.all(nil,options,true)
+          data = res['data'].nil? ? [] : res['data'].map { |obj| new(obj) }
+
+          if !paging && res['additional_data'] && res['additional_data']['pagination'] && res['additional_data']['pagination']['more_items_in_collection']
+            options[:query] ||= {}
+            options[:query].merge!({ :start => res['additional_data']['pagination']['next_start'] })
+
+            data += self.all(options.merge(paging: paging))
           end
+
           data
         else
           bad_response(res, options)
@@ -168,5 +176,4 @@ module Pipedrive
       end
     end
   end
-
 end
