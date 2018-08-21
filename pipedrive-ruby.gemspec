@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0".freeze) if s.respond_to? :required_rubygems_version=
   s.require_paths = ["lib".freeze]
   s.authors = ["Jan Schwenzien".freeze, "Waldemar Kusnezow".freeze, "Joel Courtney".freeze]
-  s.date = "2018-08-10"
+  s.date = "2018-08-21"
   s.description = "Ruby wrapper for the Pipedrive API".freeze
   s.email = "jan@general-scripting.com".freeze
   s.extra_rdoc_files = [
@@ -57,6 +57,7 @@ Gem::Specification.new do |s|
     "test/data/create_note_body.json",
     "test/data/create_organization_body.json",
     "test/data/create_person_body.json",
+    "test/data/create_stages_body.json",
     "test/data/find_activity_body.json",
     "test/data/find_organization_body.json",
     "test/helper.rb",
@@ -65,7 +66,8 @@ Gem::Specification.new do |s|
     "test/test_pipedrive_deal.rb",
     "test/test_pipedrive_note.rb",
     "test/test_pipedrive_organization.rb",
-    "test/test_pipedrive_person.rb"
+    "test/test_pipedrive_person.rb",
+    "test/test_pipedrive_stage.rb"
   ]
   s.homepage = "https://github.com/GeneralScripting/pipedrive-ruby.git".freeze
   s.licenses = ["MIT".freeze]
@@ -77,8 +79,6 @@ Gem::Specification.new do |s|
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<httparty>.freeze, [">= 0"])
-      s.add_runtime_dependency(%q<json>.freeze, [">= 0"])
-      s.add_runtime_dependency(%q<multi_xml>.freeze, [">= 0.5.2"])
       s.add_development_dependency(%q<rdoc>.freeze, ["~> 3.12"])
       s.add_development_dependency(%q<bundler>.freeze, [">= 1.0.0"])
       s.add_development_dependency(%q<jeweler>.freeze, [">= 1.8.4"])
@@ -89,8 +89,6 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<coveralls>.freeze, [">= 0"])
     else
       s.add_dependency(%q<httparty>.freeze, [">= 0"])
-      s.add_dependency(%q<json>.freeze, [">= 0"])
-      s.add_dependency(%q<multi_xml>.freeze, [">= 0.5.2"])
       s.add_dependency(%q<rdoc>.freeze, ["~> 3.12"])
       s.add_dependency(%q<bundler>.freeze, [">= 1.0.0"])
       s.add_dependency(%q<jeweler>.freeze, [">= 1.8.4"])
@@ -102,8 +100,6 @@ Gem::Specification.new do |s|
     end
   else
     s.add_dependency(%q<httparty>.freeze, [">= 0"])
-    s.add_dependency(%q<json>.freeze, [">= 0"])
-    s.add_dependency(%q<multi_xml>.freeze, [">= 0.5.2"])
     s.add_dependency(%q<rdoc>.freeze, ["~> 3.12"])
     s.add_dependency(%q<bundler>.freeze, [">= 1.0.0"])
     s.add_dependency(%q<jeweler>.freeze, [">= 1.8.4"])
