@@ -6,6 +6,10 @@ module Pipedrive
       end
     end
 
+    def activities(options = {})
+      Activity.all(options.merge(request_path: build_request_path(:activities)))
+    end
+
     def deals(options = {})
       Deal.all(options.merge(request_path: build_request_path(:deals)))
     end
