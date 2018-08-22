@@ -115,9 +115,8 @@ module Pipedrive
       end
 
       def all(options = {})
-        request_path = options[:request_path] || resource_path
-        paging = options.delete(:paging)
-        paging = true if paging.nil?
+        request_path = options.delete(:request_path) { resource_path }
+        paging       = options.delete(:paging)       { true          }
 
         res = get(request_path, options)
 
@@ -126,9 +125,10 @@ module Pipedrive
 
           if !paging && res['additional_data'] && res['additional_data']['pagination'] && res['additional_data']['pagination']['more_items_in_collection']
             options[:query] ||= {}
-            options[:query].merge!({ :start => res['additional_data']['pagination']['next_start'] })
+            options[:query].merge!({ start: res['additional_data']['pagination']['next_start'] })
 
-            data += self.all(options.merge(paging: paging))
+            options.merge!(request_path: request_path, paging: paging)
+            data += self.all(options)
           end
 
           data

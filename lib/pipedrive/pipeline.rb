@@ -1,7 +1,7 @@
 module Pipedrive
   class Pipeline < Base
     def stages
-      Stage.all(request_path: '/stages', query: { pipeline_id: self.id })
+      Stage.all(query: { pipeline_id: self.id })
     end
 
     def statistics(id, start_date, end_date)
