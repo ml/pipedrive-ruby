@@ -6,22 +6,22 @@ module Pipedrive
       end
     end
 
-    def deals
-      Deal.all(request_path: "#{resource_path}/#{id}/deals")
+    def deals(options = {})
+      Deal.all(options.merge(request_path: build_request_path(:deals)))
     end
 
     def flow(options = {})
-      res = get("#{resource_path}/#{id}/flow", options)
+      res = get(build_request_path(:flow), options)
       res.ok? ? res['data'] : bad_response(res, options)
     end
 
     def merge(options = {})
-      res = put "#{resource_path}/#{id}/merge", :body => options
+      res = put build_request_path(:merge), :body => options
       res.success? ? res['data'] : bad_response(res, options)
     end
 
     def products(options = {})
-      Product.all(options.merge(request_path: "#{resource_path}/#{id}/products"))
+      Product.all(options.merge(request_path: build_request_path(:products)))
     end
   end
 end

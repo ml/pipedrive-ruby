@@ -89,6 +89,10 @@ module Pipedrive
       res.ok? ? res : bad_response(res, id)
     end
 
+    def build_request_path(sub_path_key = nil)
+      "#{resource_path}/#{id}/#{sub_path_key}"
+    end
+
     class << self
       # Sets the authentication credentials in a class variable.
       #
