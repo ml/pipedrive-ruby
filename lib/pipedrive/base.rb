@@ -161,9 +161,11 @@ module Pipedrive
         res.ok? ? new(res) : bad_response(res,id)
       end
 
-      def find_by_name(name, opts = {})
-        res = get "#{resource_path}/find", :query => { :term => name }.merge(opts)
-        res.ok? ? new_list(res) : bad_response(res,{:name => name}.merge(opts))
+      def find_by(term, options = {})
+        options.deep_merge!(query: { term: term })
+        res = get "#{resource_path}/find", options
+
+        res.ok? ? new_list(res) : bad_response(res, options)
       end
 
       def destroy(id)
