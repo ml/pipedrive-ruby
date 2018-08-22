@@ -26,9 +26,7 @@ require 'pipedrive/user-connection'
 require 'pipedrive/push-notification'
 
 module Pipedrive
-
   def self.authenticate(token)
     Base.authenticate(token)
   end
-
 end

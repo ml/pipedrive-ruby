@@ -1,7 +1,7 @@
 module Pipedrive
   class Stage < Base
-    def self.deals(id)
-      Deal.all(get "#{resource_path}/#{id}/deals", :query => {:everyone => 1})
+    def deals
+      Deal.all(request_path "#{resource_path}/#{id}/deals", :query => { :everyone => 1 })
     end
   end
 end
