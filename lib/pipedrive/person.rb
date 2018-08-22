@@ -10,15 +10,18 @@ module Pipedrive
       Deal.all(request_path: "#{resource_path}/#{id}/deals")
     end
 
+    def flow(options = {})
+      res = get("#{resource_path}/#{id}/flow", options)
+      res.ok? ? res['data'] : bad_response(res, options)
+    end
+
     def merge(options = {})
       res = put "#{resource_path}/#{id}/merge", :body => options
       res.success? ? res['data'] : bad_response(res, options)
     end
 
-    def flow(options = {})
-      res = get("#{resource_path}/#{id}/flow", options)
-
-      res.ok? ? res['data'] : self.class.bad_response(res, options)
+    def products(options = {})
+      Product.all(options.merge(request_path: "#{resource_path}/#{id}/products"))
     end
   end
 end
