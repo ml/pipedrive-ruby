@@ -36,6 +36,11 @@ module Pipedrive
       res.ok? ? res['data'] : bad_response(res, options)
     end
 
+    def followers(options = {})
+      res = get(build_request_path(:followers), options)
+      res.ok? ? res['data'] : bad_response(res, options)
+    end
+
     def add_note(content)
       Note.create(deal_id: id, content: content)
     end
