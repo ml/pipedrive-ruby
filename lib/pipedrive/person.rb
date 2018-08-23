@@ -14,6 +14,10 @@ module Pipedrive
       Deal.all(options.merge(request_path: build_request_path(:deals)))
     end
 
+    def files(options = {})
+      File.all(options.merge(request_path: build_request_path(:files)))
+    end
+
     def flow(options = {})
       res = get(build_request_path(:flow), options)
       res.ok? ? res['data'] : bad_response(res, options)
