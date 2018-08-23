@@ -16,7 +16,7 @@ module Pipedrive
 
     base_uri 'https://api.pipedrive.com/v1'
     headers HEADERS
-    format :json
+    # format :json
 
     extend Forwardable
     def_delegators 'self.class', :delete, :get, :post, :put, :resource_path, :bad_response
