@@ -1,34 +1,34 @@
 module Pipedrive
   class Deal < Base
-    def add_product(opts = {})
-      res = post "#{resource_path}/#{id}/products", :body => opts
-      res.success? ? res['data']['product_attachment_id'] : bad_response(res,opts)
+    def add_product(options = {})
+      res = post build_request_path(:products), :body => options
+      res.success? ? res['data']['product_attachment_id'] : bad_response(res, options)
     end
 
-    def products
-      Product.all(request_path: "#{resource_path}/#{id}/products")
+    def products(options = {})
+      Product.all(options.merge(request_path: build_request_path(:products)))
     end
 
-    def add_participant(opts = {})
-      res = post "#{resource_path}/#{id}/participants", :body => opts
-      res.success? ? true : bad_response(res,opts)
+    def add_participant(options = {})
+      res = post build_request_path(:participants), :body => options
+      res.success? ? true : bad_response(res, options)
     end
 
-    def participants
-      Person.all(request_path: "#{resource_path}/#{id}/participants")
+    def participants(options = {})
+      Person.all(options.merge(request_path: build_request_path(:participants)))
     end
 
     def remove_product(product_attachment_id)
-      res = delete "#{resource_path}/#{id}/products", { :body => { :product_attachment_id => product_attachment_id } }
+      res = delete build_request_path(:products), { :body => { :product_attachment_id => product_attachment_id } }
       res.success? ? nil : bad_response(res,product_attachment_id)
     end
 
-    def activities
-      Activity.all(request_path: "#{resource_path}/#{id}/activities")
+    def activities(options = {})
+      Activity.all(options.merge(request_path: build_request_path(:activities)))
     end
 
-    def files
-      File.all(request_path: "#{resource_path}/#{id}/files")
+    def files(options = {})
+      File.all(options.merge(request_path: build_request_path(:files)))
     end
 
     def flow(options = {})
@@ -45,8 +45,8 @@ module Pipedrive
       Note.create(deal_id: id, content: content)
     end
 
-    def notes(opts = { :sort_by => 'add_time', :sort_mode => 'desc' })
-      Note.all(request_path: "/notes", :query => opts.merge(:deal_id => id))
+    def notes(options = { :sort_by => 'add_time', :sort_mode => 'desc' })
+      Note.all(:query => options.merge(:deal_id => id))
     end
   end
 end
