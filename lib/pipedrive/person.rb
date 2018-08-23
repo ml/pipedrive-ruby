@@ -28,6 +28,12 @@ module Pipedrive
       res.success? ? res['data'] : bad_response(res, options)
     end
 
+    def organization
+      organization_id = org_id.is_a?(Hash) ? org_id['value'] : org_id
+
+      Organization.find(organization_id) unless organization_id.nil?
+    end
+
     def products(options = {})
       Product.all(options.merge(request_path: build_request_path(:products)))
     end
