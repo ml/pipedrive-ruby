@@ -31,6 +31,11 @@ module Pipedrive
       File.all(request_path: "#{resource_path}/#{id}/files")
     end
 
+    def flow(options = {})
+      res = get(build_request_path(:flow), options)
+      res.ok? ? res['data'] : bad_response(res, options)
+    end
+
     def add_note(content)
       Note.create(deal_id: id, content: content)
     end
