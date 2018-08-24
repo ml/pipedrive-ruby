@@ -45,8 +45,11 @@ module Pipedrive
       Note.create(deal_id: id, content: content)
     end
 
-    def notes(options = { :sort_by => 'add_time', :sort_mode => 'desc' })
-      Note.all(:query => options.merge(:deal_id => id))
+    def notes(options = {})
+      defaults = { query: { sort_by: :add_time, sort_mode: :desc }}
+      options.deep_merge!(query: { deal_id: id })
+
+      Note.all(defaults.deep_merge(options))
     end
   end
 end

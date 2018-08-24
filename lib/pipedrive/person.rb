@@ -28,6 +28,13 @@ module Pipedrive
       res.success? ? res['data'] : bad_response(res, options)
     end
 
+    def notes(options = {})
+      defaults = { query: { sort_by: :add_time, sort_mode: :desc }}
+      options.deep_merge!(query: { person_id: id })
+
+      Note.all(defaults.deep_merge(options))
+    end
+
     def organization
       organization_id = org_id.is_a?(Hash) ? org_id['value'] : org_id
 
