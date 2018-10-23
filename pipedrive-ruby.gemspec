@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0".freeze) if s.respond_to? :required_rubygems_version=
   s.require_paths = ["lib".freeze]
   s.authors = ["Jan Schwenzien".freeze, "Waldemar Kusnezow".freeze, "Joel Courtney".freeze]
-  s.date = "2018-08-21"
+  s.date = "2018-08-23"
   s.description = "Ruby wrapper for the Pipedrive API".freeze
   s.email = "jan@general-scripting.com".freeze
   s.extra_rdoc_files = [
@@ -25,6 +25,7 @@ Gem::Specification.new do |s|
     "Rakefile",
     "VERSION",
     "lib/pipedrive-ruby.rb",
+    "lib/pipedrive/activity-field.rb",
     "lib/pipedrive/activity-type.rb",
     "lib/pipedrive/activity.rb",
     "lib/pipedrive/authorization.rb",
@@ -35,6 +36,7 @@ Gem::Specification.new do |s|
     "lib/pipedrive/file.rb",
     "lib/pipedrive/filter.rb",
     "lib/pipedrive/goal.rb",
+    "lib/pipedrive/note-field.rb",
     "lib/pipedrive/note.rb",
     "lib/pipedrive/organization-field.rb",
     "lib/pipedrive/organization.rb",

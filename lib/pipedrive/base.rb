@@ -16,7 +16,7 @@ module Pipedrive
 
     base_uri 'https://api.pipedrive.com/v1'
     headers HEADERS
-    format :json
+    # format :json
 
     extend Forwardable
     def_delegators 'self.class', :delete, :get, :post, :put, :resource_path, :bad_response
@@ -89,6 +89,10 @@ module Pipedrive
       res.ok? ? res : bad_response(res, id)
     end
 
+    def build_request_path(sub_path_key = nil)
+      "#{resource_path}/#{id}/#{sub_path_key}"
+    end
+
     class << self
       # Sets the authentication credentials in a class variable.
       #
@@ -157,9 +161,11 @@ module Pipedrive
         res.ok? ? new(res) : bad_response(res,id)
       end
 
-      def find_by_name(name, opts = {})
-        res = get "#{resource_path}/find", :query => { :term => name }.merge(opts)
-        res.ok? ? new_list(res) : bad_response(res,{:name => name}.merge(opts))
+      def find_by(term, options = {})
+        options.deep_merge!(query: { term: term })
+        res = get "#{resource_path}/find", options
+
+        res.ok? ? new_list(res) : bad_response(res, options)
       end
 
       def destroy(id)
