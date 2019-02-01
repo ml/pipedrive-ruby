@@ -45,7 +45,7 @@ class Test::Unit::TestCase
   def request_headers
     {
       'Accept'=>'application/json',
-      'Content-Type'=>'application/x-www-form-urlencoded',
+      'Content-Type'=>'application/json',
       'User-Agent'=>'Ruby.Pipedrive.Api'
     }
   end

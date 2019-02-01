@@ -11,7 +11,7 @@ class TestPipedriveStage < Test::Unit::TestCase
       with(:body => body,
         :headers => {
           'Accept'=>'application/json',
-          'Content-Type'=>'application/x-www-form-urlencoded',
+          'Content-Type'=>'application/json',
           'User-Agent'=>'Ruby.Pipedrive.Api'
         }).
       to_return(
